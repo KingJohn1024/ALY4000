@@ -6,17 +6,17 @@ theme_set(theme_minimal())
 options("getSymbols.warning4.0"=FALSE)
 options("getSymbols.yahoo.warning"=FALSE)
 
-tickers = c('FB', 'AMZN', 'NFLX', 'GOOG')
-weights = c(.25, .25, .25, .25)
+tickers <- c('FB', 'AMZN', 'NFLX', 'GOOG')
+weights <- c(.25, .25, .25, .25)
 
-sd = '2019-01-01'
-ed = '2021-05-21'
+sd <- '2019-01-01'
+ed <- '2021-05-21'
 
 # Gets quantitative data in "tibble" format
 prices <- tq_get(tickers, 
                  from = sd, 
-                 to  = ed, 
-                 get = 'stock.prices')
+                 to   = ed, 
+                 get  = 'stock.prices')
 head(prices)
 
 # Convert daily prices to returns
@@ -65,7 +65,7 @@ xf <- xf %>%
 ggplot(xf, aes(x = date, y = Rets, color = Type)) + 
   geom_point(size = .75) +
   geom_line() +
-  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  scale_y_continuous(labels=percent) +
   geom_text(data = filter(xf, date==max(date)), 
             aes(label=percent(Rets)), 
             color = 'black', 
